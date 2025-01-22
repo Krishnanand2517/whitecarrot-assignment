@@ -13,6 +13,7 @@ const OAuthButton = () => {
       provider: "google",
       options: {
         redirectTo: `${location.origin}/auth/callback`,
+        scopes: "https://www.googleapis.com/auth/calendar.readonly",
       },
     });
   };
