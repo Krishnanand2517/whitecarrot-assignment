@@ -1,8 +1,9 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { CalendarEvent } from "@/types/calendar";
 
-export async function fetchCalendarEvents() {
+export async function fetchCalendarEvents(): Promise<CalendarEvent[]> {
   const supabase = await createClient();
 
   const {
@@ -33,5 +34,5 @@ export async function fetchCalendarEvents() {
   }
 
   const data = await response.json();
-  return data.items;
+  return data.items as CalendarEvent[];
 }

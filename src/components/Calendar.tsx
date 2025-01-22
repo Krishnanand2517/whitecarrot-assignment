@@ -3,11 +3,12 @@
 import { useEffect, useState } from "react";
 import { fetchCalendarEvents } from "@/app/actions";
 import { logout } from "@/app/(auth)/logout/actions";
+import { CalendarEvent } from "@/types/calendar";
 
 const Calendar = () => {
-  const [events, setEvents] = useState([]);
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getEvents = async () => {
@@ -15,7 +16,7 @@ const Calendar = () => {
         const calendarEvents = await fetchCalendarEvents();
         setEvents(calendarEvents);
       } catch (err) {
-        setError(err.message);
+        setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
         setLoading(false);
       }
