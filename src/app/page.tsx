@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import OAuthButton from "@/components/OAuthButton";
-import UserProfile from "@/components/UserProfile";
+import Calendar from "@/components/Calendar";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -11,7 +11,18 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-6">
-      {session ? <UserProfile user={session.user} /> : <OAuthButton />}
+      {session ? (
+        <>
+          <div className="text-center mb-8">
+            <h1 className="text-2xl font-bold">
+              Welcome {session.user.email}!
+            </h1>
+          </div>
+          <Calendar />
+        </>
+      ) : (
+        <OAuthButton />
+      )}
     </div>
   );
 }
