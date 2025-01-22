@@ -1,7 +1,9 @@
+import OAuthButton from "@/components/OAuthButton";
+
 export default function Home() {
   return (
-    <div>
-      <h1>Hey 👋</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center gap-6">
+      <OAuthButton />
     </div>
   );
 }
