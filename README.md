@@ -45,6 +45,8 @@ These instructions will help you set up a copy of the project on your local mach
 
 Before getting started, make sure you have Node.js and npm (Node Package Manager) installed on your machine.
 
+Also, you need to setup the authentication flow in Supabase and Google Cloud Platform. For help, follow the instructions in [this blog post](https://www.hemantasundaray.com/blog/implement-google-signin-nextjs-supabase-auth).
+
 ### Installing & Usage
 
 1. Clone the repository to your local machine:
