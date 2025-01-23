@@ -5,13 +5,24 @@ An 'Event Calendar' to view the calendar events saved to your Google Account. Ma
 ## Table of Contents
 
 - [Live Link](#live-link)
+- [Demo Account](#demo-account)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Running the Project Locally](#running-the-project-locally)
 
 ## Live Link
 
-You can check out Event Calendar [here]().
+You can check out Event Calendar [here](https://whitecarrot-assignment-events.vercel.app).
+
+## Demo Account
+
+You can use the application using the Demo Account with the credentials:
+
+Email: `demo.user.projects@gmail.com`
+
+Password: `demoaccount`
+
+If you want to use your own Google Account, you have to email me at [krishnanand2517@gmail.com](mailto:krishnanand2517@gmail.com), so that I can add you to the _Tester's list_.
 
 ## Features
 
