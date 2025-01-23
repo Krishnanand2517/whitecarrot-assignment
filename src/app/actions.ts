@@ -65,6 +65,6 @@ export async function fetchCalendarEvents(): Promise<{
         (event: CalendarEvent) =>
           new Date(event.start.dateTime || event.start.date || "") < now
       )
-      .slice(0, 10) as CalendarEvent[],
+      .reverse() as CalendarEvent[],
   };
 }
