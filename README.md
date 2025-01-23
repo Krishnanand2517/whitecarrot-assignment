@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Event Calendar
 
-## Getting Started
+An 'Event Calendar' to view the calendar events saved to your Google Account. Made using Next.js and Supabase.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- [Live Link](#live-link)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Running the Project Locally](#running-the-project-locally)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Live Link
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can check out Event Calendar [here]().
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
 
-## Learn More
+- Secure SSO login using Google
+- View _upcoming_ (max. 20) and _past weeks's_ Google Calendar events
+- _Filter_ events by date
+- Client-Side Pagination
 
-To learn more about Next.js, take a look at the following resources:
+## Technologies Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js](https://nextjs.org/)
+- [Supabase](https://supabase.com/) for authentication
+- [TailwindCSS](https://tailwindcss.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Running the Project Locally
 
-## Deploy on Vercel
+These instructions will help you set up a copy of the project on your local machine.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Prerequisites
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Before getting started, make sure you have Node.js and npm (Node Package Manager) installed on your machine.
+
+### Installing & Usage
+
+1. Clone the repository to your local machine:
+
+   ```bash
+   git clone https://github.com/Krishnanand2517/whitecarrot-assignment
+   ```
+
+1. Navigate to the project directory & install the project dependencies:
+
+   ```bash
+   npm install
+   ```
+
+1. Copy the environment variables to a new file `.env.local`:
+
+   ```bash
+   cp .env.sample .env.local
+   ```
+
+   Obtain the values and API keys for the variables from your Supabase project (create a new Supabase project, if you haven't done so already).
+
+1. Once you have installed the project and its dependencies, you can run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+   This will start the development server on port 3000, and you can access the project in your web browser at http://localhost:3000/.
+
+### Contribute
+
+If you encounter any issues, have suggestions, or want to contribute, feel free to open an issue or submit a pull request. Happy coding!
