@@ -1,6 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import OAuthButton from "@/components/OAuthButton";
 import Calendar from "@/components/Calendar/Calendar";
+import ModalButton from "@/components/ModalButton";
 
 export default async function Home() {
   const supabase = await createClient();
@@ -22,7 +23,10 @@ export default async function Home() {
           <Calendar />
         </>
       ) : (
-        <OAuthButton />
+        <>
+          <OAuthButton />
+          <ModalButton />
+        </>
       )}
     </div>
   );
