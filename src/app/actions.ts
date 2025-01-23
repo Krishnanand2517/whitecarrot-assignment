@@ -25,7 +25,7 @@ export async function fetchCalendarEvents(): Promise<{
       "https://www.googleapis.com/calendar/v3/calendars/primary/events?" +
         new URLSearchParams({
           timeMin: now.toISOString(),
-          maxResults: "10",
+          maxResults: "20",
           singleEvents: "true",
           orderBy: "startTime",
         }),
