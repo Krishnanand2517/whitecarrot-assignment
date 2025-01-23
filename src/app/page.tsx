@@ -1,6 +1,6 @@
 import { createClient } from "@/utils/supabase/server";
 import OAuthButton from "@/components/OAuthButton";
-import Calendar from "@/components/Calendar";
+import Calendar from "@/components/Calendar/Calendar";
 
 export default async function Home() {
   const supabase = await createClient();
