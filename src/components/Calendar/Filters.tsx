@@ -32,7 +32,7 @@ const Filters: React.FC<FiltersProps> = ({ events, setFilteredEvents }) => {
       type="date"
       value={filterDate}
       onChange={handleFilterChange}
-      className="mb-4 p-2 bg-gray-100 text-black border rounded-md"
+      className="mb-4 p-2 bg-gray-100 hover:bg-gray-300 text-black border rounded-md transition-colors duration-200"
     />
   );
 };

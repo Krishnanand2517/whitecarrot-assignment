@@ -19,22 +19,25 @@ const EventTable: React.FC<EventTableProps> = ({ events }) => {
   };
 
   return (
-    <div className="overflow-x-auto">
-      <table className="w-full border-collapse">
+    <div className="overflow-hidden border rounded-lg">
+      <table className="min-w-full divide-y divide-gray-200">
         <thead>
           <tr className="bg-gray-700">
-            <th className="border px-4 py-2 text-left">Event</th>
-            <th className="border px-4 py-2 text-left">Date</th>
-            <th className="border px-4 py-2 text-left w-[120px]">Time</th>
-            <th className="border px-4 py-2 text-left">Description</th>
+            <th className="px-4 py-2 text-left">Event</th>
+            <th className="px-4 py-2 text-left">Date</th>
+            <th className="px-4 py-2 text-left w-[120px]">Time</th>
+            <th className="px-4 py-2 text-left">Description</th>
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className="divide-y divide-gray-200">
           {currentEvents.map((event) => (
-            <tr key={event.id} className="hover:bg-gray-600">
-              <td className="border px-4 py-2">{event.summary}</td>
-              <td className="border px-4 py-2">
+            <tr
+              key={event.id}
+              className="hover:bg-gray-600 transition-colors duration-200"
+            >
+              <td className="px-4 py-2">{event.summary}</td>
+              <td className="px-4 py-2">
                 {new Date(
                   event.start.dateTime || event.start.date || ""
                 ).toLocaleDateString("en-IN", {
@@ -43,7 +46,7 @@ const EventTable: React.FC<EventTableProps> = ({ events }) => {
                   year: "numeric",
                 })}
               </td>
-              <td className="border px-4 py-2 whitespace-nowrap">
+              <td className="px-4 py-2 whitespace-nowrap">
                 {event.start.dateTime
                   ? new Date(event.start.dateTime).toLocaleTimeString([], {
                       hour: "2-digit",
@@ -51,15 +54,12 @@ const EventTable: React.FC<EventTableProps> = ({ events }) => {
                     })
                   : "All Day"}
               </td>
-              <td className="border px-4 py-2">{event.description || "-"}</td>
+              <td className="px-4 py-2">{event.description || "-"}</td>
             </tr>
           ))}
           {currentEvents.length === 0 && (
             <tr>
-              <td
-                colSpan={4}
-                className="border px-4 py-8 text-center text-gray-500"
-              >
+              <td colSpan={4} className="px-4 py-8 text-center text-gray-500">
                 No events found
               </td>
             </tr>
@@ -68,14 +68,14 @@ const EventTable: React.FC<EventTableProps> = ({ events }) => {
       </table>
 
       {/* Pagination Controls */}
-      <div className="flex justify-center items-center mt-4">
+      <div className="flex justify-center items-center py-4 border-t">
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
           className={`px-4 py-2 mx-1 bg-gray-600 text-white rounded-md ${
             currentPage === 1
               ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-gray-700"
+              : "hover:bg-gray-700 transition-colors duration-200"
           }`}
         >
           Previous
@@ -88,7 +88,7 @@ const EventTable: React.FC<EventTableProps> = ({ events }) => {
             className={`px-4 py-2 mx-1 rounded-md ${
               currentPage === index + 1
                 ? "bg-blue-600 text-white"
-                : "bg-gray-600 text-white hover:bg-gray-700"
+                : "bg-gray-600 text-white hover:bg-gray-700 transition-colors duration-200"
             }`}
           >
             {index + 1}
@@ -101,7 +101,7 @@ const EventTable: React.FC<EventTableProps> = ({ events }) => {
           className={`px-4 py-2 mx-1 bg-gray-600 text-white rounded-md ${
             currentPage === totalPages
               ? "opacity-50 cursor-not-allowed"
-              : "hover:bg-gray-700"
+              : "hover:bg-gray-700 transition-colors duration-200"
           }`}
         >
           Next

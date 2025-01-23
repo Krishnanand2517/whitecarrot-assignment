@@ -13,10 +13,11 @@ export default async function Home() {
     <div className="min-h-screen flex flex-col items-center justify-center gap-6">
       {session ? (
         <>
-          <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold">
-              Welcome {session.user.email}!
-            </h1>
+          <div className="w-full max-w-4xl mb-6 mt-2">
+            <h4 className="text-sm md:text-base text-right">
+              Current user:{" "}
+              <span className="font-bold">{session.user.email}</span>
+            </h4>
           </div>
           <Calendar />
         </>
