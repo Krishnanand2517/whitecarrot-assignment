@@ -7,15 +7,25 @@ import { logout } from "@/app/(auth)/logout/actions";
 
 const Calendar = () => {
   const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>([]);
+  const [filteredUpcomingEvents, setFilteredUpcomingEvents] = useState<
+    CalendarEvent[]
+  >([]);
   const [pastEvents, setPastEvents] = useState<CalendarEvent[]>([]);
+  const [filteredPastEvents, setFilteredPastEvents] = useState<CalendarEvent[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [upcomingFilterDate, setUpcomingFilterDate] = useState("");
+  const [pastFilterDate, setPastFilterDate] = useState("");
 
   const getEvents = async () => {
     try {
       const { upcomingEvents, pastEvents } = await fetchCalendarEvents();
       setUpcomingEvents(upcomingEvents);
+      setFilteredUpcomingEvents(upcomingEvents);
       setPastEvents(pastEvents);
+      setFilteredPastEvents(pastEvents);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
@@ -35,6 +45,62 @@ const Calendar = () => {
   const handleRefresh = async () => {
     setLoading(true);
     await getEvents();
+  };
+
+  const filterEvents = (events: CalendarEvent[], filterDate: string) => {
+    if (!filterDate) return events;
+
+    return events.filter((event) => {
+      const eventDate = new Date(
+        event.start.dateTime || event.start.date || ""
+      ).toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+
+      return eventDate === filterDate;
+    });
+  };
+
+  const handleUpcomingFilterChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const selectedDate = e.target.value;
+    setUpcomingFilterDate(selectedDate);
+
+    if (!selectedDate) {
+      // show all events on clearing
+      setFilteredUpcomingEvents(upcomingEvents);
+      return;
+    }
+
+    const formattedDate = new Date(selectedDate).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    setFilteredUpcomingEvents(filterEvents(upcomingEvents, formattedDate));
+  };
+
+  const handlePastFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedDate = e.target.value;
+    setPastFilterDate(selectedDate);
+
+    if (!selectedDate) {
+      // show all events on clearing
+      setFilteredPastEvents(pastEvents);
+      return;
+    }
+
+    const formattedDate = new Date(selectedDate).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    setFilteredPastEvents(filterEvents(pastEvents, formattedDate));
   };
 
   const renderEventTable = (events: CalendarEvent[]) => {
@@ -126,13 +192,29 @@ const Calendar = () => {
       </div>
 
       <div className="mb-8">
-        <h3 className="text-xl font-semibold mb-4">Upcoming Events</h3>
-        {renderEventTable(upcomingEvents)}
+        <div className="flex justify-between items-center">
+          <h3 className="text-xl font-semibold mb-4">Upcoming Events</h3>
+          <input
+            type="date"
+            value={upcomingFilterDate}
+            onChange={handleUpcomingFilterChange}
+            className="mb-4 p-2 bg-gray-100 text-black border rounded-md"
+          />
+        </div>
+        {renderEventTable(filteredUpcomingEvents)}
       </div>
 
       <div>
-        <h3 className="text-xl font-semibold mb-4">Past Week Events</h3>
-        {renderEventTable(pastEvents)}
+        <div className="flex justify-between items-center">
+          <h3 className="text-xl font-semibold mb-4">Past Week Events</h3>
+          <input
+            type="date"
+            value={pastFilterDate}
+            onChange={handlePastFilterChange}
+            className="mb-4 p-2 bg-gray-100 text-black border rounded-md"
+          />
+        </div>
+        {renderEventTable(filteredPastEvents)}
       </div>
     </div>
   );
