@@ -2,19 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { fetchCalendarEvents } from "@/app/actions";
-import { logout } from "@/app/(auth)/logout/actions";
 import { CalendarEvent } from "@/types/calendar";
+import { logout } from "@/app/(auth)/logout/actions";
 
 const Calendar = () => {
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<CalendarEvent[]>([]);
+  const [pastEvents, setPastEvents] = useState<CalendarEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const getEvents = async () => {
       try {
-        const calendarEvents = await fetchCalendarEvents();
-        setEvents(calendarEvents);
+        const { upcomingEvents, pastEvents } = await fetchCalendarEvents();
+        setUpcomingEvents(upcomingEvents);
+        setPastEvents(pastEvents);
       } catch (err) {
         setError(err instanceof Error ? err.message : "An error occurred");
       } finally {
@@ -31,38 +33,12 @@ const Calendar = () => {
     await logout();
   };
 
-  if (loading) {
+  const renderEventTable = (events: CalendarEvent[]) => {
     return (
-      <div className="w-full max-w-4xl mx-auto p-4">
-        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 mx-auto"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="w-full max-w-4xl mx-auto p-4 text-red-600">
-        Error: {error}
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full max-w-4xl mx-auto p-4">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold">Upcoming Events</h2>
-        <button
-          onClick={handleSignOut}
-          className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
-        >
-          Sign Out
-        </button>
-      </div>
-
       <div className="overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-slate-700">
+            <tr className="bg-gray-700">
               <th className="border px-4 py-2 text-left">Event</th>
               <th className="border px-4 py-2 text-left">Date</th>
               <th className="border px-4 py-2 text-left">Time</th>
@@ -71,10 +47,7 @@ const Calendar = () => {
           </thead>
           <tbody>
             {events.map((event) => (
-              <tr
-                key={event.id}
-                className="hover:bg-slate-600 transition-colors"
-              >
+              <tr key={event.id} className="hover:bg-gray-600">
                 <td className="border px-4 py-2">{event.summary}</td>
                 <td className="border px-4 py-2">
                   {new Date(
@@ -102,12 +75,52 @@ const Calendar = () => {
                   colSpan={4}
                   className="border px-4 py-8 text-center text-gray-500"
                 >
-                  No upcoming events found
+                  No events found
                 </td>
               </tr>
             )}
           </tbody>
         </table>
+      </div>
+    );
+  };
+
+  if (loading) {
+    return (
+      <div className="w-full max-w-4xl mx-auto p-4">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 mx-auto"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="w-full max-w-4xl mx-auto p-4 text-red-600">
+        Error: {error}
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-full max-w-4xl mx-auto p-4">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-bold">Calendar Events</h2>
+        <button
+          onClick={handleSignOut}
+          className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+        >
+          Sign Out
+        </button>
+      </div>
+
+      <div className="mb-8">
+        <h3 className="text-xl font-semibold mb-4">Upcoming Events</h3>
+        {renderEventTable(upcomingEvents)}
+      </div>
+
+      <div>
+        <h3 className="text-xl font-semibold mb-4">Past Week Events</h3>
+        {renderEventTable(pastEvents)}
       </div>
     </div>
   );
